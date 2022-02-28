@@ -1,0 +1,16 @@
+no_mcp_on_k_i = 1.2
+no_mcp_on_k_j = 100000
+no_mcp_on_q_i = 2 #
+no_mcp_on_q_j = 100
+no_mcp_off_k_i = 1.2
+no_mcp_off_k_j = 100000
+no_mcp_off_q_i = 2 #
+no_mcp_off_q_j = 0
+mcp_on_k_i = 1.2
+mcp_on_k_j = 1.2
+mcp_on_q_i = 2 #
+mcp_on_q_j = 2 #
+mcp_off_k_i = 1.2
+mcp_off_k_j = 1.2
+mcp_off_q_i = 2 #
+mcp_off_q_j = 0
