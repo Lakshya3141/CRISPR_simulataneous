@@ -36,32 +36,32 @@ for j in range(num):
         i_arr_MCP_on = np.zeros(5)
         j_arr_MCP_on = np.zeros(5)
         sys_arr_MCP_on = np.zeros(3)
-        i_arr_MCP_on[0] = i
-        j_arr_MCP_on[0] = j
+        i_arr_MCP_on[0] = i*10
+        j_arr_MCP_on[0] = j*10
         sys_arr_MCP_on[0] = params["d_t"]
         sys_arr_MCP_on[1] = params["m_t"]
 
         i_arr_MCP_off = np.zeros(5)
         j_arr_MCP_off = np.zeros(5)
         sys_arr_MCP_off = np.zeros(3)
-        i_arr_MCP_off[0] = i
-        j_arr_MCP_off[0] = j
+        i_arr_MCP_off[0] = i*10
+        j_arr_MCP_off[0] = j*10
         sys_arr_MCP_off[0] = params["d_t"]
         sys_arr_MCP_off[1] = params["m_t"]
 
         i_arr_no_MCP_on = np.zeros(5)
         j_arr_no_MCP_on = np.zeros(5)
         sys_arr_no_MCP_on = np.zeros(3)
-        i_arr_no_MCP_on[0] = i
-        j_arr_no_MCP_on[0] = j
+        i_arr_no_MCP_on[0] = i*10
+        j_arr_no_MCP_on[0] = j*10
         sys_arr_no_MCP_on[0] = params["d_t"]
         sys_arr_no_MCP_on[1] = params["m_t"]
 
         i_arr_no_MCP_off = np.zeros(5)
         j_arr_no_MCP_off = np.zeros(5)
         sys_arr_no_MCP_off = np.zeros(3)
-        i_arr_no_MCP_off[0] = i
-        j_arr_no_MCP_off[0] = j
+        i_arr_no_MCP_off[0] = i*10
+        j_arr_no_MCP_off[0] = j*10
         sys_arr_no_MCP_off[0] = params["d_t"]
         sys_arr_no_MCP_off[1] = params["m_t"]
 
