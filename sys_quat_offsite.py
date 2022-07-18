@@ -66,5 +66,6 @@ def quat_offsite_eqns(i_arr, j_arr, sys_arr, p, dt):
     i_arr[4] = p["Di_t"]/(1+p["mcp_off_q_i"]*p["mcp_off_k_i"]*g_i*d*m)
     j_arr[4] = p["Dj_t"]/(1+p["mcp_off_q_j"]*p["mcp_off_k_j"]*g_j*d*m)
     sys_arr[2] += (p["K_i"]*C_i*D_j/p["Dj_t"] + p["K_j"]*D_j*D_i/p["Dj_t"] - p["dG"]*G)*dt
+    #sys_arr[2] += (p["K_i"]*C_i + p["K_j"]*D_j - p["dG"]*G)*dt
 
     return i_arr, j_arr, sys_arr

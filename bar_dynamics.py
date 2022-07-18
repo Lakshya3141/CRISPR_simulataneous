@@ -100,7 +100,7 @@ for j in range(num):
             hi_hi = [sys_arr_no_MCP_on[2], sys_arr_no_MCP_off[2], 
                         sys_arr_MCP_on[2], sys_arr_MCP_off[2]]                        
 
-labels = ['Ter onsite', 'Ter offsite', 'Quat onsite', 'Quat offsite',]
+labels = ['Heterogenous\nonsite', 'Heterogenous\noffsite', 'Homogenous\nonsite', 'Homogenous\noffsite',]
 
 x = np.arange(len(labels))  # the label locations
 width = 0.2  # the width of the bars
@@ -113,15 +113,15 @@ rects4 = ax.bar(x + 1.5*width, hi_hi, width, label="1-1")
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_ylabel('GFP levels')
-ax.set_title('Different systems')
+ax.set_title('reducing heterogenous-inhibition bssgRNA binding')
 ax.set_xticks(x)
 ax.set_xticklabels(labels)
 ax.legend()
 
-ax.bar_label(rects1, padding=2)
-ax.bar_label(rects2, padding=2)
-ax.bar_label(rects3, padding=2)
-ax.bar_label(rects4, padding=2)
+#ax.bar_label(rects1, padding=2)
+#ax.bar_label(rects2, padding=2)
+#ax.bar_label(rects3, padding=2)
+#ax.bar_label(rects4, padding=2)
 
 fig.tight_layout()
 
