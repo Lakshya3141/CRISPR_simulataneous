@@ -43,6 +43,7 @@ from scipy.optimize import curve_fit
 import pandas as pd
 import numpy as np
 xdata = pd.read_csv(r'data\GFP_data.csv')
+xdata = xdata.loc[xdata['AHL'] != 10] 
 def cat_optimizer(xdata, cat):
     xdata = xdata.loc[xdata['category'] == cat]
     ydata = np.array(xdata['mean'])
@@ -67,4 +68,34 @@ pst2 = std_cov(pcov2)
 pst3 = std_cov(pcov3)
 pst4 = std_cov(pcov4)
 
-#max_nfev
+
+#### Scaling and PCA Part ####
+xdata = pd.read_csv(r'data\GFP_data.csv')
+xdata = xdata.loc[xdata['AHL'] != 10]
+data = xdata[['AHL','arabinose','mean','category']]
+net_data = [data[data['category'] == i] for i in range(1,5)]
+raw_data = [net_data[i].drop("category", axis = 1) for i in range(0,4)]
+#AHL, arabinose, mean
+
+from sklearn.preprocessing import StandardScaler
+scaled_data = [StandardScaler().fit_transform(raw_data[i]) for i in range(0,4)]
+
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+
+def taking_pca(i,scaled_data = scaled_data):
+    pca = PCA()
+    pca_data = pd.DataFrame(pca.fit_transform(scaled_data[i]))
+    pca_loadings = pd.DataFrame(pca.components_, columns= ['AHL', 'arabinose', 'GFP'])
+    print(f"category{i+1}")
+    print(pca_loadings)
+    print(pca.explained_variance_ratio_)
+    fig = plt.figure(figsize = (8,8))
+    ax = fig.add_subplot(1,1,1) 
+    ax.set_xlabel('PC1', fontsize = 15)
+    ax.set_ylabel('PC2', fontsize = 15)
+    ax.set_title(f'Category {i+1}', fontsize = 20)
+    ax.scatter(pca_data[0],pca_data[1])
+
+taking_pca(1)
