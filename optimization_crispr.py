@@ -59,6 +59,16 @@ popt2, pcov2 = cat_optimizer(xdata, 2)
 popt3, pcov3 = cat_optimizer(xdata, 3)
 popt4, pcov4 = cat_optimizer(xdata, 4)
 
+tot_popt1 = []
+tot_cov1 = []
+for i in range(0,15):
+    print(i)
+    tpt,tcv = cat_optimizer(xdata, 1)
+    tot_popt1.append(tpt)
+    tot_cov1.append(tcv)
+    print(i)
+    
+
 from math import *
 def std_cov(pcov):
     return(np.sqrt(np.diag(np.array(pcov))))
