@@ -19,59 +19,16 @@ import numpy as np
 # params = com_pars.copy()
 # params.extend(circ_pars)
 
-def solver_func(xdata, gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG,
-				ki1,kj1,qi1,qj1,ki2,kj2,qi2,qj2,
-				ki3,kj3,qi3,qj3,ki4,kj4,qi4,qj4):
-	
-	com_pars = [gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG]
-	trange = 10000
-	i_arr = np.zeros(5)
-	j_arr = np.zeros(5)
-	sys_arr = np.zeros(3)
-	ydata = []
-	if type(xdata[0]) == float:
-		xdata = [xdata]
-	for data in xdata:
-		alpha, beta, gamma = data
-		i_arr[0] = beta
-		j_arr[0] = gamma
-		sys_arr[0] = com_pars[7]
-		sys_arr[1] = com_pars[6]
-		dt = 0.01
-		circ = int(alpha)
-        
-		
-		if circ == 1:
-			circ_pars = [ki1,kj1,qi1,qj1]
-			for t in range(trange):
-				i_arr, j_arr, sys_arr = ter_eqns(i_arr, j_arr,
-												sys_arr , com_pars, circ_pars , dt)
-		elif circ == 2:
-			circ_pars = [ki2,kj2,qi2,qj2]
-			for t in range(trange):
-				i_arr, j_arr, sys_arr = ter_eqns(i_arr, j_arr,
-												sys_arr , com_pars, circ_pars , dt)
-		elif circ == 3:
-			circ_pars = [ki3,kj3,qi3,qj3]
-			for t in range(trange):
-				i_arr, j_arr, sys_arr = quat_eqns(i_arr, j_arr,
-												sys_arr ,com_pars, circ_pars , dt)
-		elif circ == 4:
-			circ_pars = [ki4,kj4,qi4,qj4]
-			for t in range(trange):
-				i_arr, j_arr, sys_arr = quat_eqns(i_arr, j_arr,
-												sys_arr ,com_pars, circ_pars , dt)
-		#print(sys_arr[2])    
-		ydata.append(sys_arr[2])
-	#return(sys_arr[2])
-	return ydata
-
-def solver_func_ternon_log(xdata, gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG,
-				ki1,kj1,qi1,qj1):
+#%%Considering common parameters
+def solver_func_ter_com(xdata,ki1,kj1,qi1,qj1):
 	# (-20,-20,-50,-50,-20,-20,-10,-10,0,-20,-20,-20,-10,-10,-10,-10)
     # (20,20,15,15,30,30,20,20,10,10,10,10,20,20,20,20)
-	com_pars = [10**gi,10**gj,10**dgi,10**dgj,10**Ki,10**Kj,10**mt,10**dt,
-             Dt,10**ui,10**uj,10**dG]
+    # com_pars = [gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG]
+	com_pars = [9.83998675e-01, 9.55710945e-01, 9.21118775e-01, 1.64378908e+00,
+             1.77625088e+00, 2.46876100e+01, 1.18838752e+00, 1.66272060e-01,
+             3.94813952e+00, 9.59500804e-01, 6.61835728e-01, 7.08982540e-03,
+             1.29531198e+00, 6.33097230e-01, 4.64830267e-01, 7.70509267e-01]
+    
 	trange = 10000
 	i_arr = np.zeros(5)
 	j_arr = np.zeros(5)
@@ -86,7 +43,7 @@ def solver_func_ternon_log(xdata, gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG,
 		sys_arr[0] = com_pars[7]
 		sys_arr[1] = com_pars[6]
 		dt = 0.01      
-		circ_pars = [10**ki1,10**kj1,10**qi1,10**qj1]
+		circ_pars = [ki1,kj1,qi1,qj1]
 		for t in range(trange):
 		    i_arr, j_arr, sys_arr = ter_eqns(i_arr, j_arr,
 												sys_arr , com_pars, circ_pars , dt)
@@ -94,7 +51,38 @@ def solver_func_ternon_log(xdata, gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG,
 	ydata.append(sys_arr[2])
 	#return(sys_arr[2])
 	return ydata
-	
+
+def solver_func_quat_com(xdata,ki1,kj1,qi1,qj1):
+	# (-20,-20,-50,-50,-20,-20,-10,-10,0,-20,-20,-20,-10,-10,-10,-10)
+    # (20,20,15,15,30,30,20,20,10,10,10,10,20,20,20,20)
+	# com_pars = [gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG]
+	com_pars = [9.83998675e-01, 9.55710945e-01, 9.21118775e-01, 1.64378908e+00,
+             1.77625088e+00, 2.46876100e+01, 1.18838752e+00, 1.66272060e-01,
+             3.94813952e+00, 9.59500804e-01, 6.61835728e-01, 7.08982540e-03,
+             1.29531198e+00, 6.33097230e-01, 4.64830267e-01, 7.70509267e-01]
+	trange = 10000
+	i_arr = np.zeros(5)
+	j_arr = np.zeros(5)
+	sys_arr = np.zeros(3)
+	ydata = []
+	if type(xdata[0]) == float:
+		xdata = [xdata]
+	for data in xdata:
+		beta, gamma = data
+		i_arr[0] = beta
+		j_arr[0] = gamma
+		sys_arr[0] = com_pars[7]
+		sys_arr[1] = com_pars[6]
+		dt = 0.01      
+		circ_pars = [ki1,kj1,qi1,qj1]
+		for t in range(trange):
+		    i_arr, j_arr, sys_arr = quat_eqns(i_arr, j_arr,
+												sys_arr , com_pars, circ_pars , dt)
+		#print(sys_arr[2])    
+	ydata.append(sys_arr[2])
+	#return(sys_arr[2])
+	return ydata
+#%% Individual models for ternary and quaternary, semi-worked
 def solver_func_ternon(xdata, gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG,
 				ki1,kj1,qi1,qj1):
 	# (-20,-20,-50,-50,-20,-20,-10,-10,0,-20,-20,-20,-10,-10,-10,-10)
@@ -153,6 +141,7 @@ def solver_func_quaton(xdata, gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG,
 	#return(sys_arr[2])
 	return ydata
 
+#%% dummy initial try, failed
 def dum_solver_func(xdata, params):
 	
 	com_pars = params[0:12]
@@ -179,3 +168,79 @@ def dum_solver_func(xdata, params):
 	return(sys_arr[2])
 	
 
+#%% initial try with all circuits in one, failed
+def solver_func(xdata, gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG,
+				ki1,kj1,qi1,qj1,ki2,kj2,qi2,qj2,
+				ki3,kj3,qi3,qj3,ki4,kj4,qi4,qj4):
+	
+	com_pars = [gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG]
+	trange = 10000
+	i_arr = np.zeros(5)
+	j_arr = np.zeros(5)
+	sys_arr = np.zeros(3)
+	ydata = []
+	if type(xdata[0]) == float:
+		xdata = [xdata]
+	for data in xdata:
+		alpha, beta, gamma = data
+		i_arr[0] = beta
+		j_arr[0] = gamma
+		sys_arr[0] = com_pars[7]
+		sys_arr[1] = com_pars[6]
+		dt = 0.01
+		circ = int(alpha)
+        
+		
+		if circ == 1:
+			circ_pars = [ki1,kj1,qi1,qj1]
+			for t in range(trange):
+				i_arr, j_arr, sys_arr = ter_eqns(i_arr, j_arr,
+												sys_arr , com_pars, circ_pars , dt)
+		elif circ == 2:
+			circ_pars = [ki2,kj2,qi2,qj2]
+			for t in range(trange):
+				i_arr, j_arr, sys_arr = ter_eqns(i_arr, j_arr,
+												sys_arr , com_pars, circ_pars , dt)
+		elif circ == 3:
+			circ_pars = [ki3,kj3,qi3,qj3]
+			for t in range(trange):
+				i_arr, j_arr, sys_arr = quat_eqns(i_arr, j_arr,
+												sys_arr ,com_pars, circ_pars , dt)
+		elif circ == 4:
+			circ_pars = [ki4,kj4,qi4,qj4]
+			for t in range(trange):
+				i_arr, j_arr, sys_arr = quat_eqns(i_arr, j_arr,
+												sys_arr ,com_pars, circ_pars , dt)
+		#print(sys_arr[2])    
+		ydata.append(sys_arr[2])
+	#return(sys_arr[2])
+	return ydata
+#%% trial for logarithmic fitting, failed
+def solver_func_ternon_log(xdata, gi,gj,dgi,dgj,Ki,Kj,mt,dt,Dt,ui,uj,dG,
+				ki1,kj1,qi1,qj1):
+	# (-20,-20,-50,-50,-20,-20,-10,-10,0,-20,-20,-20,-10,-10,-10,-10)
+    # (20,20,15,15,30,30,20,20,10,10,10,10,20,20,20,20)
+	com_pars = [10**gi,10**gj,10**dgi,10**dgj,10**Ki,10**Kj,10**mt,10**dt,
+             Dt,10**ui,10**uj,10**dG]
+	trange = 10000
+	i_arr = np.zeros(5)
+	j_arr = np.zeros(5)
+	sys_arr = np.zeros(3)
+	ydata = []
+	if type(xdata[0]) == float:
+		xdata = [xdata]
+	for data in xdata:
+		beta, gamma = data
+		i_arr[0] = beta
+		j_arr[0] = gamma
+		sys_arr[0] = com_pars[7]
+		sys_arr[1] = com_pars[6]
+		dt = 0.01      
+		circ_pars = [10**ki1,10**kj1,10**qi1,10**qj1]
+		for t in range(trange):
+		    i_arr, j_arr, sys_arr = ter_eqns(i_arr, j_arr,
+												sys_arr , com_pars, circ_pars , dt)
+		#print(sys_arr[2])    
+	ydata.append(sys_arr[2])
+	#return(sys_arr[2])
+	return ydata
